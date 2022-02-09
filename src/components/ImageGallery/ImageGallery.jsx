@@ -1,6 +1,6 @@
 import s from './ImageGallery.module.css'
 import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
-
+import PropTypes from "prop-types";
 
 const ImageGallery = ({ images, open }) => {
     
@@ -22,4 +22,15 @@ const ImageGallery = ({ images, open }) => {
     
 }
 
-export default ImageGallery ;
+export default ImageGallery;
+
+ImageGallery.propTypes = {
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      webformatURL: PropTypes.string.isRequired,
+      largeImageURL: PropTypes.string.isRequired,
+    }),
+  ),
+  open: PropTypes.func.isRequired,
+};

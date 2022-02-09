@@ -19,27 +19,35 @@ export default class App extends Component {
   componentDidUpdate(prevProps, prevState) {
     const prevName = prevState.photoName;
     const nextName = this.state.photoName;
+    const prevPage = prevState.page;
+    const nextPage = this.state.page;
 
-    if ((prevName !== nextName) && !this.state.loading) {  
+    if (((prevPage!== nextPage) || (prevName !== nextName)) && !this.state.loading) {  
       this.setState({loading:true})
 
       fetch(`https://pixabay.com/api/?q=${this.state.photoName}&page=${this.state.page}&key=25514627-ce86075d369dfb00c77a4eeac&image_type=photo&orientation=horizontal&per_page=12`)
         .then(res => res.json())
         .then(res => { 
           const images = res.hits.map(({ id, largeImageURL, webformatURL }) => ({ id, largeImageURL, webformatURL }));
-          this.setState({images})
+          this.setState({ images: nextPage > 1 ? [...this.state.images, ...images]: images })
+          
         })
         .finally(()=> this.setState({loading:false}))
       }
 
       // .then(res => res.data.hits.map(({id, webformatURL, largeImageURL})=> ({id, webformatURL, largeImageURL})))
   }
+  
   searchbarFormSubmit = (photoName) => {
-    this.setState({ photoName });
+    this.setState({ photoName, page: 1});
     
   }
   onOpenImage = state => {
     this.setState({ largeImage: state })
+  }
+  onLoadMore = () => {
+    this.setState(prevState => ({ page: prevState.page + 1 }));
+    
   }
 
   render() {
@@ -60,7 +68,11 @@ export default class App extends Component {
           image={this.state.largeImage}
           onClose={this.onOpenImage}
         />}
-        <Button/>
+        {<Button
+          isActive={this.state.images.length > 1}
+          load={this.onLoadMore}
+          input={this.state.photoName}
+        />}
       </>
     );
   }

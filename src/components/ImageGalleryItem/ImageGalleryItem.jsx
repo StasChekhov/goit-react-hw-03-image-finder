@@ -1,4 +1,5 @@
 import s from './ImageGalleryItem.module.css';
+import PropTypes from "prop-types";
 
 const ImageGalleryItem = ({ image, largeImage, showImage  }) => {
    
@@ -13,3 +14,10 @@ const ImageGalleryItem = ({ image, largeImage, showImage  }) => {
 }
  
 export default ImageGalleryItem;
+
+ImageGalleryItem.propTypes = {
+  image: PropTypes.string.isRequired,
+  largeImage: PropTypes.string.isRequired,
+  showImage: PropTypes.func.isRequired,
+  
+};
