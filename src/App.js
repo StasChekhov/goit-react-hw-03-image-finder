@@ -55,6 +55,8 @@ export default class App extends Component {
     return (
       <>
         <Searchbar onSubmit={this.searchbarFormSubmit} />
+        {this.state.photoName !== '' && (
+
         <ImageGallery
           images={this.state.images}
           open={this.onOpenImage}
@@ -63,6 +65,8 @@ export default class App extends Component {
           // previewURL={ previewURL }
           // webformatURL={ webformatURL }
         />
+        )}
+        
         {this.state.loading && <Loader />}
         {this.state.largeImage && <Modal
           image={this.state.largeImage}
