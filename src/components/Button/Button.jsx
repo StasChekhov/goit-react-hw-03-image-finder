@@ -1,14 +1,14 @@
 import s from './Button.module.css';
 import PropTypes from "prop-types";
 
-const Button = ({isActive, load, input}) => {
-    return isActive ? ( 
+const Button = ({ load}) => {
+    return  ( 
         <div className={s.wrapper}>
-            <button className={s.button} type="button" onClick={() => load(input)}>
+            <button className={s.button} type="button" onClick={() => load()}>
                 Load more
             </button> 
         </div>
-     ): null ;
+     )
 }
  
 export default Button;

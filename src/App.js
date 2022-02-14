@@ -54,29 +54,31 @@ export default class App extends Component {
     
     return (
       <>
-        <Searchbar onSubmit={this.searchbarFormSubmit} />
-        {this.state.photoName !== '' && (
+          <Searchbar onSubmit={this.searchbarFormSubmit} />
+          {this.state.photoName !== '' && (
 
-        <ImageGallery
-          images={this.state.images}
-          open={this.onOpenImage}
+          <ImageGallery
+            images={this.state.images}
+            open={this.onOpenImage}
+            
+            // id={ id }
+            // previewURL={ previewURL }
+            // webformatURL={ webformatURL }
+          />
+          )}
+
+          {this.state.loading && <Loader />}
+          {this.state.largeImage && <Modal
+            image={this.state.largeImage}
+            onClose={this.onOpenImage}
+          />}
           
-          // id={ id }
-          // previewURL={ previewURL }
-          // webformatURL={ webformatURL }
-        />
-        )}
-        
-        {this.state.loading && <Loader />}
-        {this.state.largeImage && <Modal
-          image={this.state.largeImage}
-          onClose={this.onOpenImage}
-        />}
-        {<Button
-          isActive={this.state.images.length > 1}
-          load={this.onLoadMore}
-          input={this.state.photoName}
-        />}
+          {(this.state.images.length >= 12) ?
+            <Button
+            load={this.onLoadMore}
+            />
+            : null
+          }
       </>
     );
   }
